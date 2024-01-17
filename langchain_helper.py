@@ -44,7 +44,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_few_shot_db_chain():
-    #DATABASE_URL = "cockroachdb://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+    DATABASE_URL = "postgresql://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
     #GOOGLE_API_KEY= st.secrets['google_api_key']
     
     parsed_url = urllib.parse.urlparse(DATABASE_URL)
