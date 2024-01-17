@@ -44,7 +44,7 @@ load_dotenv()
 
 def get_few_shot_db_chain():
     DATABASE_URL = "postgresql://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
-    GOOGLE_API_KEY= st.secrets['google_api_key']
+    GOOGLE_API_KEY= st.secrets['AIzaSyAQDPRxDG1K3ONyY3vMr0JbGoVftUFgCpo']
 
     db = SQLDatabase.from_uri(st.secrets["DATABASE_URL"],sample_rows_in_table_info=3)
     llm =  GooglePalm(google_api_key=st.secrets["GOOGLE_API_KEY"],temperature=0.1)
