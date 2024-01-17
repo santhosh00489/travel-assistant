@@ -16,7 +16,7 @@ from langchain_helper import get_few_shot_db_chain
 
 st.title("CDM Info Hub")
 
-question = st.header_input("QUESTION: ")
+question = st.text_input("QUESTION: ")
 
 if st.button("Enter"):
     if question:
