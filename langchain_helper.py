@@ -43,8 +43,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_few_shot_db_chain():
-    # database_url = "postgresql://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
-    # google_api_key = st.secrets['google_api_key']
+    DATABASE_URL = "postgresql://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+    GOOGLE_API_KEY= st.secrets['google_api_key']
 
     db = SQLDatabase.from_uri(st.secrets["DATABASE_URL"],sample_rows_in_table_info=3)
     llm =  GooglePalm(google_api_key=st.secrets["GOOGLE_API_KEY"],temperature=0.1)
