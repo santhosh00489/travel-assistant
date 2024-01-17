@@ -15,7 +15,7 @@ import streamlit as st
 from langchain_helper import get_few_shot_db_chain
 
 st.title("CDM Info Hub")
-st.header('Developed by ABINA M.Sc Computer Science')
+
 question = st.text_input("QUESTION: ")
 
 if st.button("Enter"):
@@ -28,3 +28,4 @@ if st.button("Enter"):
         st.text("ANSWER:")
         st.write(response)
 
+        st.header('Developed by ABINA M.Sc Computer Science')
