@@ -7,6 +7,10 @@ from langchain.vectorstores import FAISS
 from langchain.prompts import FewShotPromptTemplate
 from langchain.chains.sql_database.prompt import PROMPT_SUFFIX
 from langchain.prompts.prompt import PromptTemplate
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+from langchain.databases import SQLDatabase
+from langchain.connectors import BaseConnector
 import streamlit as st
 import subprocess
 command = [
@@ -37,8 +41,7 @@ few_shots = [
      'Answer': "Maariyappa Theater 2K, LENA CINEMAS 4K- DOLBY ATMOS, VENIVE"},
 
 ]
-from langchain.config import Config
-from langchain.database import LangChainDB
+
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -46,20 +49,14 @@ load_dotenv()
 def get_few_shot_db_chain():
     DATABASE_URL = "postgresql://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
     GOOGLE_API_KEY= st.secrets['google_api_key']
-    load_dotenv()
+    
 
-    DATABASE_URI = os.environ["DATABASE_URL"]
-    
-    cfg = Config()
-    db = LangChainDB(uri=DATABASE_URI, config=cfg)
-    
-    # Connect to the database and automatically create tables if they don't exist
-    db.connect()
-    db.create_tables([], autocreate=True)
-    db.commit()
-    db.close()
-    
-    #db = SQLDatabase.from_uri(st.secrets["DATABASE_URL"],sample_rows_in_table_info=3)
+    engine_opts = {"executemany_mode": "values_tuple"}  # Improves insert speed
+    engine = create_engine(DATABASE_URL, strategy="cockroachdb", future=True, fast_executemany=True, **engine_opts)
+    conn = engine.connect()
+    trans = conn.begin()
+
+    db = SQLDatabase.from_uri(st.secrets["DATABASE_URL"],sample_rows_in_table_info=3)
     llm =  GooglePalm(google_api_key=st.secrets["GOOGLE_API_KEY"],temperature=0.1)
 
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
