@@ -23,6 +23,6 @@ if st.button("Enter"):
         chain = get_few_shot_db_chain()
         response = chain.run(question)
 
-        st.subheader("ANSWER")
+        st.text("ANSWER")
         st.write(response)
 
