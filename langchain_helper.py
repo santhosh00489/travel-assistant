@@ -7,6 +7,7 @@ from langchain.vectorstores import FAISS
 from langchain.prompts import FewShotPromptTemplate
 from langchain.chains.sql_database.prompt import PROMPT_SUFFIX
 from langchain.prompts.prompt import PromptTemplate
+import urllib.parse
 import streamlit as st
 import subprocess
 command = [
@@ -46,7 +47,10 @@ def get_few_shot_db_chain():
     #DATABASE_URL = "cockroachdb://santhosh:tKuDH8TNAo7IeT3xsvvAjw@ready-cub-5897.6xw.aws-ap-southeast-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
     #GOOGLE_API_KEY= st.secrets['google_api_key']
     
-    db = SQLDatabase.from_uri(st.secrets["DATABASE_URL"],sample_rows_in_table_info=3)
+    parsed_url = urllib.parse.urlparse(DATABASE_URL)
+    new_scheme = parsed_url._replace(scheme="cockroachdb").geturl()
+    # Create the SQLDatabase instance with the new URL
+    db = SQLDatabase.from_uri(new_scheme, sample_rows_in_table_info=3)
     llm =  GooglePalm(google_api_key=st.secrets["GOOGLE_API_KEY"],temperature=0.1)
 
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
