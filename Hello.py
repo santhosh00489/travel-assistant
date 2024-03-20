@@ -27,5 +27,3 @@ if st.button("Enter"):
         
         st.text("ANSWER:")
         st.write(response)
-
-        st.text('Developed by ABINA M.Sc Computer Science')
